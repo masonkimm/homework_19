@@ -1,105 +1,114 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
-// import API from '../utils/API';
+import './style.css';
 
-class Person extends Component {
+export default class Person extends Component {
   state = {
-    result: {},
     search: '',
     rando: [],
-    sortBy: "name",
-    sortDir: "asc"
   };
 
-  makeAPICall(sortBy){
-    if(this.state.sortDir === "asc"){
-
-    }
-    this.setState({sortBy: sortBy})
-  }
-
-  // searchPerson = (query) => {
-  //   API.search(query)
-  //     .then((res) => this.setState({ result: res.data }))
-  //     .catch((err) => console.log(err));
-  // };
-
-  // === student === This will load up the api automatically when the page loads
-  componentDidMount() {
-    // this.searchPerson('');
-
-    Axios.get(`https://randomuser.me/api/?results=10`).then((resp) => {
+  // this will load up the api automatically when the page loads
+  componentDidMount = () => {
+    Axios.get(`https://randomuser.me/api/?results=15`).then((resp) => {
       console.log(resp);
       this.setState({ rando: resp.data.results });
     });
-  }
+  };
+  // new search button function
+  newSearch = () => {
+    this.componentDidMount();
+  };
 
-  // === student ===
+  // to handle changes in the input field
   handleInputChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-    this.setState({
-      [name]: value,
+
+    this.setState(
+      {
+        [name]: value,
+      },
+      this.searchFunction
+    );
+  };
+
+  // function to search for person
+  searchFunction = () => {
+    console.log(this.state.search);
+
+    if (this.state.search === '') {
+      this.newSearch();
+    }
+
+    let searches = this.state.rando.filter((res) => {
+      if (
+        res.name.first.includes(this.state.search) ||
+        res.name.last.includes(this.state.search) ||
+        res.phone.includes(this.state.search)
+      ) {
+        return res;
+      }
     });
+    this.setState({ rando: searches });
   };
 
-  // === student === When the form is submitted, search the Movie API for `this.state.search`
-  handleFormSubmit = (event) => {
-    event.preventDefault();
-    this.searchPerson(this.state.search);
-  };
-
-  render() {
+  // to render our page
+  render = () => {
     return (
       <>
-        <h1> Employee Directoryy </h1>
+        <h1> Employee Directory </h1>
         <form>
           <div className="form-group">
-            <label htmlFor="search">Search:</label>
+            <label htmlFor="search">
+              {' '}
+              Search by: first name, last name, or phone #{' '}
+            </label>
+
             <input
               onChange={this.handleInputChange}
               value={this.state.search}
               name="search"
               type="text"
               className="form-control"
-              placeholder="Search For a person"
+              placeholder="Case Sensitive"
               id="search"
             />
             <br />
-            <button onClick={this.handleFormSubmit} className="btn btn-primary">
-              Search
+            <button onClick={this.newSearch} className="btn btn-info">
+              New Search
             </button>
+            <br />
           </div>
         </form>
-        
 
         <table className="table table-striped">
           <thead>
             <tr>
-              <th> Image:</th>
-              <th onClick={() => this.makeAPICall("Name")}> Name: </th>
+              <th> Image: </th>
+              <th> Name: </th>
               <th> Email: </th>
               <th> Phone: </th>
               <th> DOB: </th>
             </tr>
           </thead>
           <tbody>
-          
-            {this.state.rando.map((person)=>(
+            {this.state.rando.map((person) => (
               <tr key={person.login.uuid}>
-                <td><img src={person.picture.thumbnail} alt=""></img></td>
-                <td>{person.name.first} {person.name.last}</td>
+                <td>
+                  <img src={person.picture.thumbnail} alt=""></img>
+                </td>
+                <td>
+                  {person.name.first} {person.name.last}{' '}
+                </td>
                 <td>{person.email}</td>
                 <td>{person.phone}</td>
                 <td>{person.dob.date}</td>
               </tr>
             ))}
-            
           </tbody>
         </table>
       </>
     );
-  }
+  };
 }
-
-export default Person;
