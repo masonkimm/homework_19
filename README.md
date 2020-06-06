@@ -19,11 +19,12 @@ Employee Directory
 terminal>> npm start
 
 ## Usage: 
-![demo](./public/img/img1.png)
-![demo](./public/img/img2.png)
-![demo](./public/img/img3.png)
-![demo](./public/img/img4.png)
-![demo](./public/img/img5.png)
+![demo](./public/img/img6.png)
+![demo](./public/img/img7.png)
+![demo](./public/img/img8.png)
+![demo](./public/img/img9.png)
+![demo](./public/img/img10.png)
+![demo](./public/img/img11.png)
 
 
 ## Credits: 
