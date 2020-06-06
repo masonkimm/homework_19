@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import Axios from 'axios';
 import './style.css';
+import {FaCaretUp} from "react-icons/fa"
+import {FaCaretDown} from "react-icons/fa"
 
 export default class Person extends Component {
   state = {
@@ -50,7 +52,7 @@ export default class Person extends Component {
     this.setState({ rando: searches });
   };
 
-  sortFunction = () => {
+  sortUpFunction = () => {
     let firstNum = 1;
     let secondNum = -1;
     //  stuff.sort((a, b) => (a.name > b.name ? firstNum : secondNum));
@@ -58,6 +60,16 @@ export default class Person extends Component {
     console.log("hi")
     this.setState({rando: sortResult})
   };
+  sortDownFunction = () => {
+    let firstNum = -1;
+    let secondNum = 1;
+    //  stuff.sort((a, b) => (a.name > b.name ? firstNum : secondNum));
+    let sortResult = this.state.rando.sort((a, b) => (a.name.first > b.name.first ? firstNum : secondNum));
+    console.log("hi")
+    this.setState({rando: sortResult})
+  };
+
+
 
   // to render our page
   render = () => {
@@ -93,8 +105,8 @@ export default class Person extends Component {
         <table className="table table-striped">
           <thead>
             <tr>
-              <th> Image: </th>
-              <th onClick={this.sortFunction}> Name: <span>(click to sort alphabetically)</span> </th>
+              <th> Image:  </th>
+              <th> Name: <FaCaretUp onClick={this.sortUpFunction}/> <FaCaretDown onClick={this.sortDownFunction}/> <span>(click to sort alphabetically)</span> </th>
               <th> Email: </th>
               <th> Phone: </th>
               <th> DOB: </th>
