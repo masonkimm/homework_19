@@ -24,7 +24,6 @@ export default class Person extends Component {
   handleInputChange = (event) => {
     const name = event.target.name;
     const value = event.target.value;
-
     this.setState(
       {
         [name]: value,
@@ -36,11 +35,9 @@ export default class Person extends Component {
   // function to search for person
   searchFunction = () => {
     console.log(this.state.search);
-
     if (this.state.search === '') {
       this.newSearch();
     }
-
     let searches = this.state.rando.filter((res) => {
       if (
         res.name.first.includes(this.state.search) ||
@@ -53,40 +50,51 @@ export default class Person extends Component {
     this.setState({ rando: searches });
   };
 
+  sortFunction = () => {
+    let firstNum = 1;
+    let secondNum = -1;
+    //  stuff.sort((a, b) => (a.name > b.name ? firstNum : secondNum));
+    let sortResult = this.state.rando.sort((a, b) => (a.name.first > b.name.first ? firstNum : secondNum));
+    console.log("hi")
+    this.setState({rando: sortResult})
+  };
+
   // to render our page
   render = () => {
     return (
       <>
-        <h1> Employee Directory </h1>
-        <form>
-          <div className="form-group">
-            <label htmlFor="search">
-              {' '}
-              Search by: first name, last name, or phone #{' '}
-            </label>
+        <div className="bgPic">
+          <h1> Employee Directory </h1>
+          <form>
+            <div className="form-group">
+              <label htmlFor="search">
+                {' '}
+                Search by: first name, last name, or phone #{' '}
+              </label>
 
-            <input
-              onChange={this.handleInputChange}
-              value={this.state.search}
-              name="search"
-              type="text"
-              className="form-control"
-              placeholder="Case Sensitive"
-              id="search"
-            />
-            <br />
-            <button onClick={this.newSearch} className="btn btn-info">
-              New Search
-            </button>
-            <br />
-          </div>
-        </form>
+              <input
+                onChange={this.handleInputChange}
+                value={this.state.search}
+                name="search"
+                type="text"
+                className="form-control"
+                placeholder="Case Sensitive"
+                id="search"
+              />
+              <br />
+              <button onClick={this.newSearch} className="btn btn-info">
+                New Search
+              </button>
+              <br />
+            </div>
+          </form>
+        </div>
 
         <table className="table table-striped">
           <thead>
             <tr>
               <th> Image: </th>
-              <th> Name: </th>
+              <th onClick={this.sortFunction}> Name: <span>(click to sort alphabetically)</span> </th>
               <th> Email: </th>
               <th> Phone: </th>
               <th> DOB: </th>
