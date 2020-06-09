@@ -7,7 +7,7 @@
 
 Employee Directory
 
-* [https://homework19-employee-directory.herokuapp.com/](https://homework19-employee-directory.herokuapp.com/)
+* [ Heoroku App Link](https://homework19-emp-directory.herokuapp.com/)
 
 
 ## Table of Contents:
